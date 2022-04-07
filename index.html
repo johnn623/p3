@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!---Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!---My stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <title>Project 3</title>
+  </head>
+
+
+  <body class="bg-primary">
+    <h1>Calculator</h1>
+    <div class="container-xl">
+    <hr class="rounded bg-warning">
+  </div>
+  </body>
+  <p>This application will take <b>three</b> numbers, and calculate the <u>maximum</u>, <u>minimum</u>, <u>average</u>, <u>median</u>,
+    and the <u>range</u> of the following numbers.
+  </p>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-header">
+            <h5 style="font-weight: bold">Insert Three Numbers:</h5>
+          </div>
+          <form id="calculate" action="index.html" method="post">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-secondary">
+              <label for="one">First Number:</label><br>
+              <input type="text" class="inputs rounded" id="one" name="one" value="">
+            </li>
+            <li class="list-group-item bg-light">
+              <label for="two">Second Number:</label><br>
+              <input type="text" class="inputs rounded" id="two" name="two" value="">
+            </li>
+            <li class="list-group-item bg-secondary">
+              <label for="three">Third Number:</label><br>
+              <input type="text" class="inputs rounded" id="three" name="three" value=""><br><br>
+            </li>
+          </ul>
+        </form>
+        <button onclick="myFunction()" class="btn btn-success">Calculate!</button>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-header">
+            <h5 style="font-weight: bold">Results:</h5>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-secondary">
+              <label><h5 id="max">Maximum: 0</h5></label><br>
+            </li>
+            <li class="list-group-item bg-light">
+              <label><h5 id="min">Minimum: 0</h5></label><br>
+            </li>
+            <li class="list-group-item bg-secondary">
+              <label><h5 id="avg">Average: 0</h5></label><br>
+            </li>
+            <li class="list-group-item bg-light">
+              <label><h5 id="median">Median: 0</h5></label><br>
+            </li>
+            <li class="list-group-item bg-secondary">
+              <label><h5 id="range">Range: 0</h5></label><br>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>  <br>
+  <h6 id="error"></h6>
+<script>
+function myFunction() {
+  var nums = document.getElementById("calculate");
+  var x=nums.elements[0].value;
+  var y=nums.elements[1].value;
+  var z=nums.elements[2].value;
+  if (isNaN(x) ==0 && isNaN(y)==0 && isNaN(z)==0) //if elements are appropiate characters(numbers)..
+  {
+    var max=Math.max(x,y,z); //selects the maximum number from the three
+    document.getElementById("max").innerHTML=("Maximum: "+max);
+
+    var min=Math.min(x,y,z); //selects the minimum number from the three
+    document.getElementById("min").innerHTML=("Minimum: "+min);
+
+    var avg=(+x + +y + +z)/3;  //simple average formula
+    document.getElementById("avg").innerHTML=("Average: "+avg);
+
+    //to find median, I decided to do so in a different way. Since we only have three numbers, the median will be the number that isn't the maximum OR the minimum.
+    for (var i = 0; i < 3; i++){
+      if (nums.elements[i].value != max && +nums.elements[i].value != min)
+        {median=nums.elements[i].value;}
+    }
+//another way to do so is to use this sorting function below, where then the median will be median=arr[1]. I liked my way more so I used that, but either one works.
+//Another sorting function I found on "https://www.w3schools.com/jsref/jsref_sort.asp": arr.sort(function(a, b){return a - b});
+    document.getElementById("median").innerHTML=("Median: "+median);
+
+    var range = +max - +min; //range formula
+    document.getElementById("range").innerHTML=("Range: "+range);
+    document.getElementById("error").innerHTML=(""); //set error to empty string in case of a previous error.
+  }
+  else { //if an input contained an invalid character..
+    document.getElementById("error").innerHTML=("Error. Please check inputs to make sure that they don't contain any invalid characters.");
+  }
+}
+</script>
+</html>
